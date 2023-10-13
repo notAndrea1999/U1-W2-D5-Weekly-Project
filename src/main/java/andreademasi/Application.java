@@ -53,7 +53,13 @@ public class Application {
             System.out.println(ex);
         }
 
-       
+        List<Catalogo> fullList = new ArrayList<>();
+        try {
+            fullList = loadFromDisk();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        fullList.forEach(System.out::println);
     }
 
     public static Libri addBook() {
@@ -191,7 +197,31 @@ public class Application {
         return false;
     }
 
+    public static List<Catalogo> loadFromDisk() throws IOException {
+        File file = new File("src/output.txt");
+        List<Libri> listaLibri = new ArrayList<>();
+        List<Riviste> listaRiviste = new ArrayList<>();
+        String toStringFile = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+        List<String> splittedList = Arrays.asList(toStringFile.split("Fine-Lista-Libri"));
+        String[] libri = splittedList.get(0).split("#");
+        String[] riviste = splittedList.get(1).split("#");
 
+        for (String lib : libri) {
+            String[] bookDetails = lib.split("@");
+            listaLibri.add(new Libri(bookDetails[0], Integer.parseInt(bookDetails[1]), Integer.parseInt(bookDetails[2]), bookDetails[3], bookDetails[4]));
+        }
+
+        for (String riv : riviste) {
+            String[] journalDetails = riv.split("@");
+            listaRiviste.add(new Riviste(journalDetails[0], Integer.parseInt(journalDetails[1]), Integer.parseInt(journalDetails[2]), Periodicita.valueOf(journalDetails[3])));
+        }
+
+        List<Catalogo> fullList = new ArrayList<>();
+        fullList.addAll(listaLibri);
+        fullList.addAll(listaRiviste);
+
+        return fullList;
+    }
 }
 
 
