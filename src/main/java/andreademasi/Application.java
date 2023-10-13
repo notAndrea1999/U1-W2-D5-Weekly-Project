@@ -80,7 +80,7 @@ public class Application {
                         break loop2;
                     }
                     case 2: {
-                        System.out.println("Digita 1 per rimuovere un LIBRO tramite ISBN o digita 2 per rimuovere una tramite ISBN");
+                        System.out.println("Digita 1 per rimuovere un LIBRO tramite ISBN o digita 2 per rimuovere una RIVISTA tramite ISBN");
                         int chooseRemove = Integer.parseInt(input.nextLine());
                         second:
                         switch (chooseRemove) {
