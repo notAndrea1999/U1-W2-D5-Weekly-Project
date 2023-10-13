@@ -30,4 +30,15 @@ public class Libri extends Catalogo {
         this.genere = genere;
     }
 
+    @Override
+    public String toString() {
+        return "Libri{" +
+                "autore='" + autore + '\'' +
+                ", genere='" + genere + '\'' +
+                ", ISBN=" + ISBN +
+                ", titolo='" + titolo + '\'' +
+                ", annoDiPubblicazione=" + annoDiPubblicazione +
+                ", numeroDiPagine=" + numeroDiPagine +
+                '}';
+    }
 }
