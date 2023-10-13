@@ -1,8 +1,13 @@
 package andreademasi.catalogo;
 
+import com.github.javafaker.Faker;
+
+import java.util.Locale;
 import java.util.Random;
 
 public class Libri extends Catalogo {
+    static Faker faker = new Faker(Locale.ITALY);
+    static Random rndm = new Random();
     private String autore;
     private String genere;
 
@@ -13,6 +18,7 @@ public class Libri extends Catalogo {
         this.autore = autore;
         this.genere = genere;
     }
+
 
     public String getAutore() {
         return autore;

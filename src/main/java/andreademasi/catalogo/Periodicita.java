@@ -14,4 +14,6 @@ public enum Periodicita {
         return periodicita[rndm.nextInt(periodicita.length)];
 
     }
+
+
 }
