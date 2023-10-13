@@ -28,14 +28,14 @@ public class Application {
             listaLibri.add(libriSupplier.get());
 
         }
-//        listaLibri.forEach(System.out::println);
+        listaLibri.forEach(System.out::println);
 
         Supplier<Riviste> rivisteSupplier = () -> new Riviste(faker.medical().diseaseName(), rndm.nextInt(2000, 2023), rndm.nextInt(10, 300), Periodicita.randomPeriodicita());
         List<Catalogo> listaRiviste = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
             listaRiviste.add(rivisteSupplier.get());
         }
-        // listaRiviste.forEach(System.out::println);
+        listaRiviste.forEach(System.out::println);
 
         // listaLibri.add(addBook());
         listaLibri.forEach(System.out::println);
@@ -47,19 +47,140 @@ public class Application {
         //searchElementByPublishDate(listaLibri);
         //searchElementByAuthor(listaLibri);
 
-        try {
-            saveData(listaLibri, listaRiviste);
-        } catch (IOException ex) {
-            System.out.println(ex);
+
+        loop:
+        while (true) {
+            Scanner input = new Scanner(System.in);
+            try {
+                System.out.println("Cosa vuoi fare? Puoi scegliere tra: ");
+                System.out.println("1: AGGIUNGI UN ELEMENTO, 2: RIMUOVI UN ELEMENTO, 3: RICERCA UN ELEMENTO, 4: CONSULTA L'ARCHIVIO, 0: ESCI");
+                int choose = Integer.parseInt(input.nextLine());
+                loop2:
+                switch (choose) {
+                    case 0: {
+                        break loop;
+                    }
+                    case 1: {
+                        System.out.println("Digita 1 per aggiungere un LIBRO o digita 2 per aggiungere una RIVISTA");
+                        int chooseAdd = Integer.parseInt(input.nextLine());
+                        first:
+                        switch (chooseAdd) {
+                            case 1: {
+                                listaLibri.add(addBook());
+                                break first;
+                            }
+                            case 2: {
+                                listaRiviste.add(addRivista());
+                                break first;
+                            }
+                            default:
+                                break first;
+
+                        }
+                        break loop2;
+                    }
+                    case 2: {
+                        System.out.println("Digita 1 per rimuovere un LIBRO tramite ISBN o digita 2 per rimuovere una tramite ISBN");
+                        int chooseRemove = Integer.parseInt(input.nextLine());
+                        second:
+                        switch (chooseRemove) {
+                            case 1: {
+                                removeElementByISBN(listaLibri);
+                                break second;
+                            }
+                            case 2: {
+                                removeElementByISBN(listaRiviste);
+                                break second;
+                            }
+                            default:
+                                break second;
+                        }
+
+                        break loop2;
+
+                    }
+                    case 3: {
+                        System.out.println("Con quale parametro vuoi fare la ricerca?");
+                        System.out.println("1: CODICE ISBN");
+                        System.out.println("2: ANNO DI PUBBLICAZIONE");
+                        System.out.println("3: AUTORE");
+                        int chooseSearch = Integer.parseInt(input.nextLine());
+                        third:
+                        switch (chooseSearch) {
+                            case 1: {
+                                System.out.println("Se vuoi cercare un libro digita 1 se vuoi cercare un articolo digita 2");
+                                int chooseSearch2 = Integer.parseInt(input.nextLine());
+                                switch (chooseSearch2) {
+                                    case 1: {
+                                        searchElementByISBN(listaLibri);
+                                        break third;
+                                    }
+                                    case 2: {
+                                        searchElementByISBN(listaRiviste);
+                                        break third;
+                                    }
+                                    default:
+                                        break third;
+                                }
+
+
+                            }
+                            case 2: {
+                                System.out.println("Se vuoi cercare un libro digita 1 se vuoi cercare un articolo digita 2");
+                                int chooseSearch3 = Integer.parseInt(input.nextLine());
+                                switch (chooseSearch3) {
+                                    case 1: {
+                                        searchElementByPublishDate(listaLibri);
+                                        break third;
+                                    }
+                                    case 2: {
+                                        searchElementByPublishDate(listaRiviste);
+                                        break third;
+                                    }
+                                    default:
+                                        break third;
+                                }
+
+                            }
+                            case 3: {
+                                searchElementByAuthor(listaLibri);
+                                break third;
+                            }
+
+
+                        }
+                        break loop2;
+
+                    }
+                    case 4: {
+                        try {
+                            saveData(listaLibri, listaRiviste);
+                        } catch (IOException ex) {
+                            System.out.println(ex);
+                        }
+
+                        List<Catalogo> fullList = new ArrayList<>();
+                        try {
+                            fullList = loadFromDisk();
+                        } catch (IOException ex) {
+                            System.out.println(ex);
+                        }
+                        fullList.forEach(System.out::println);
+                        break;
+                    }
+                    default: {
+                        System.out.println("Il numero inserito non e' valido");
+                        break;
+                    }
+                }
+
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+
         }
 
-        List<Catalogo> fullList = new ArrayList<>();
-        try {
-            fullList = loadFromDisk();
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-        fullList.forEach(System.out::println);
+
     }
 
     public static Libri addBook() {
