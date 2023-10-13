@@ -201,7 +201,7 @@ public class Application {
                 autore = input.nextLine();
                 System.out.println("Inserisci il genere");
                 genere = input.nextLine();
-                input.close();
+
                 break;
 
 
@@ -227,7 +227,7 @@ public class Application {
                 titolo = input.nextLine();
                 System.out.println("Inserisci l'anno di pubblicazione");
                 annoDiPubblicazione = Integer.parseInt(input.nextLine());
-                input.close();
+
                 break;
 
 
@@ -245,7 +245,6 @@ public class Application {
             System.out.println("Inserisci il codice ISBN dell'elemento che vuoi eliminare");
             int ISBN = Integer.parseInt(input.nextLine());
             List<Catalogo> elementoCatalogo = catalogoList.stream().filter(elem -> elem.getISBN() == ISBN).toList();
-            input.close();
 
 
             catalogoList.remove(elementoCatalogo.get(0));
@@ -261,7 +260,7 @@ public class Application {
             System.out.println("Inserisci il codice ISBN dell'elemento che vuoi cercare");
             int ISBN = Integer.parseInt(input.nextLine());
             List<Catalogo> elementoCatalogo = catalogoList.stream().filter(elem -> elem.getISBN() == ISBN).toList();
-            input.close();
+
             elementoCatalogo.forEach(System.out::println);
         } catch (Exception ex) {
             System.err.println(ex);
@@ -274,7 +273,7 @@ public class Application {
             System.out.println("Inserisci l'anno di pubblicazione dell'elemento che vuoi visualizzare");
             int annoDiPubblicazione = Integer.parseInt(input.nextLine());
             List<Catalogo> elementoCatalogo = catalogoList.stream().filter(elem -> elem.getAnnoDiPubblicazione() == annoDiPubblicazione).toList();
-            input.close();
+
             elementoCatalogo.forEach(System.out::println);
         } catch (Exception ex) {
             System.err.println(ex);
@@ -290,7 +289,7 @@ public class Application {
             System.out.println("Inserisci l'autore dell'elemento che vuoi visualizzare");
             String autore = input.nextLine();
             List<Libri> list = listaLibri.stream().filter(elem -> elem.getAutore().equalsIgnoreCase(autore)).toList();
-            input.close();
+
             list.forEach(System.out::println);
         } catch (Exception ex) {
             System.err.println(ex);
